@@ -1,0 +1,12 @@
+# These values are baked into the generated Shortcut when you run ./install.sh.
+name = "Rewrite in Somnath's Voice"
+model = "gpt-5.6-luna"
+reasoning_effort = "none"
+api_url = "https://api.openai.com/v1/responses"
+notification = "Rewritten — paste to replace"
+prompt_file = "prompt.md"
+output_directory = "dist"
+
+# "anyone" produces a Shortcut that can be installed on your other Apple devices.
+signing_mode = "anyone"
+

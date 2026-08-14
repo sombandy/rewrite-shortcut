@@ -1,0 +1,20 @@
+[project]
+name = "rewrite-shortcut"
+version = "0.1.0"
+description = "Build a personal Apple Shortcut that rewrites selected text with OpenAI."
+authors = [
+    {name = "Somnath Banerjee", email = "somnath.banerjee@gmail.com"},
+]
+readme = "README.md"
+requires-python = ">=3.13.1"
+dependencies = []
+
+[project.scripts]
+rewrite-shortcut = "rewrite_shortcut.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rewrite_shortcut"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
