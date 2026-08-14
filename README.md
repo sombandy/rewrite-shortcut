@@ -2,7 +2,8 @@
 
 This project builds a personal Apple Shortcut named **Rewrite in Somnath's
 Voice**. From the Share Sheet it sends selected text to OpenAI, copies the
-rewritten result to the clipboard, and shows a notification when it is ready.
+rewritten result to the clipboard, and waits briefly to ensure the clipboard
+write completes. It does not create a notification.
 
 The generated Shortcut uses `gpt-5.6-luna` with reasoning disabled for a quick,
 inexpensive rewrite. Both settings can be changed in `config.toml`.
@@ -57,7 +58,7 @@ Notes is a good app for the first test:
 5. Tap **Rewrite in Somnath's Voice**.
 6. Approve any OpenAI network or clipboard permissions requested on the first
    run.
-7. Wait for the **Rewritten — paste to replace** notification.
+7. Wait a few seconds for the Shortcut to finish.
 8. Paste while the original text is selected to replace it with the rewrite.
 
 Some apps restrict text selection or sharing. Confirm that the Shortcut works
@@ -78,7 +79,7 @@ If that option is unavailable, scroll to the bottom of the Share Sheet, tap
 
 The optimized workflow is:
 
-**Select text → Copy → triple-tap the back of the iPhone → Paste**
+**Select text → Copy → triple-tap the back of the iPhone → wait → Paste**
 
 First, make the Shortcut use the clipboard when it is run without Share Sheet
 input:
@@ -96,10 +97,11 @@ Then assign the Shortcut to Back Tap:
    clipboard content to OpenAI.
 3. Scroll to **Shortcuts** and select **Rewrite in Somnath's Voice**.
 
-To use it, select text, tap **Copy**, triple-tap the back of the iPhone, wait for
-the notification, and paste. Pasting while the original text remains selected
-replaces it without a separate delete step. On supported iPhones, the Action
-button can be assigned to the Shortcut instead of using Back Tap.
+To use it, select text, tap **Copy**, triple-tap the back of the iPhone, wait a
+few seconds for the Shortcut to finish, and paste. Pasting while the original
+text remains selected replaces it without a separate delete step. On supported
+iPhones, the Action button can be assigned to the Shortcut instead of using
+Back Tap.
 
 Apple documents the relevant features in its guides for
 [Share Sheet shortcuts](https://support.apple.com/guide/shortcuts/apd163eb9f95/ios),
@@ -133,7 +135,7 @@ convenient than the Share Sheet.
    Voice**. In some apps it is also available by Control-clicking selected text
    and opening **Services**.
 4. Approve any first-run permission prompts.
-5. Wait for the **Rewritten — paste to replace** notification.
+5. Wait a few seconds for the Shortcut to finish.
 6. Press **⌘V** while the original sentence is selected to replace it.
 
 If the Shortcut is missing from the Services menu, open **System Settings →
@@ -151,7 +153,7 @@ After the Services workflow works:
 4. Press an unused combination, such as **Control–Option–R**.
 
 The normal Mac workflow is then **select text → press the keyboard shortcut →
-wait for the notification → press ⌘V**.
+wait for the Shortcut to finish → press ⌘V**.
 
 See Apple's guide to
 [running Shortcuts while working on a Mac](https://support.apple.com/guide/shortcuts-mac/apd163eb9f95/mac)
@@ -196,7 +198,7 @@ shortcut is ever shared accidentally.
 ## Project layout
 
 - `prompt.md` — your editable writing style and rewrite rules
-- `config.toml` — shortcut name, model, reasoning, and notification settings
+- `config.toml` — shortcut name, model, reasoning, and clipboard settings
 - `.env` — your local API key (created on first install and ignored by Git)
 - `src/rewrite_shortcut/` — plist generation and macOS signing code
 - `dist/` — generated signed shortcut (ignored by Git)

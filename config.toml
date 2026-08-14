@@ -3,10 +3,11 @@ name = "Rewrite in Somnath's Voice"
 model = "gpt-5.6-luna"
 reasoning_effort = "none"
 api_url = "https://api.openai.com/v1/responses"
-notification = "Rewritten — paste to replace"
+# Keep Copy to Clipboard from being the final action. Some Shortcuts versions
+# fail to commit the clipboard write when the shortcut ends immediately after it.
+clipboard_commit_delay_seconds = 1
 prompt_file = "prompt.md"
 output_directory = "dist"
 
 # "anyone" produces a Shortcut that can be installed on your other Apple devices.
 signing_mode = "anyone"
-

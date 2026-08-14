@@ -29,7 +29,7 @@ class ShortcutConfig:
     model: str
     reasoning_effort: str
     api_url: str
-    notification: str
+    clipboard_commit_delay_seconds: float
     prompt_file: Path
     output_directory: Path
     signing_mode: str
@@ -48,7 +48,7 @@ def load_config(root: Path = PROJECT_ROOT) -> ShortcutConfig:
         "model",
         "reasoning_effort",
         "api_url",
-        "notification",
+        "clipboard_commit_delay_seconds",
         "prompt_file",
         "output_directory",
         "signing_mode",
@@ -67,12 +67,21 @@ def load_config(root: Path = PROJECT_ROOT) -> ShortcutConfig:
         allowed = ", ".join(sorted(VALID_SIGNING_MODES))
         raise ConfigurationError(f"signing_mode must be one of: {allowed}")
 
+    try:
+        clipboard_commit_delay_seconds = float(values["clipboard_commit_delay_seconds"])
+    except (TypeError, ValueError) as error:
+        raise ConfigurationError("clipboard_commit_delay_seconds must be a number.") from error
+    if not 0 < clipboard_commit_delay_seconds <= 10:
+        raise ConfigurationError(
+            "clipboard_commit_delay_seconds must be greater than 0 and no more than 10."
+        )
+
     return ShortcutConfig(
         name=str(values["name"]),
         model=str(values["model"]),
         reasoning_effort=reasoning_effort,
         api_url=str(values["api_url"]),
-        notification=str(values["notification"]),
+        clipboard_commit_delay_seconds=clipboard_commit_delay_seconds,
         prompt_file=root / str(values["prompt_file"]),
         output_directory=root / str(values["output_directory"]),
         signing_mode=signing_mode,
@@ -266,9 +275,9 @@ def make_workflow(
             ),
         ),
         _action(
-            "is.workflow.actions.notification",
+            "is.workflow.actions.delay",
             _uuid(),
-            WFNotificationActionBody=config.notification,
+            WFDelayTime=config.clipboard_commit_delay_seconds,
         ),
     ]
 
